@@ -1,0 +1,11 @@
+framework module Exi {
+  umbrella header "Exi.h"
+
+  export *
+  module * { export * }
+}
+
+module Exi.Swift {
+    header "Exi-Swift.h"
+    requires objc
+}
