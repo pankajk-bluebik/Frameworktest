@@ -1,0 +1,79 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name EXiSDK
+import Dispatch
+import Foundation
+import Swift
+import SystemConfiguration
+import _Concurrency
+public struct EXiMetadata : Swift.Codable, Swift.Equatable {
+  public var termsURL: Swift.String?
+  public var privacyPolicyURL: Swift.String?
+  public static func == (a: EXiSDK.EXiMetadata, b: EXiSDK.EXiMetadata) -> Swift.Bool
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct EXiProfile : Swift.Equatable, Swift.Codable {
+  public static func == (a: EXiSDK.EXiProfile, b: EXiSDK.EXiProfile) -> Swift.Bool
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct EXiRegion : Swift.Codable, Swift.Equatable {
+  public let id: Swift.String?
+  public let name: Swift.String?
+  public static func == (a: EXiSDK.EXiRegion, b: EXiSDK.EXiRegion) -> Swift.Bool
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public let EXiSDK: EXiSDK.EXiSession
+public let version: Swift.String
+@_hasMissingDesignatedInitializers open class EXiSession {
+  public static let `default`: EXiSDK.EXiSession
+  public func setup(configuration: EXiSDK.EXiConfiguration)
+  public func checkHealth(jwtToken: Swift.String, completion: @escaping (Swift.Result<Swift.Bool, EXiSDK.EXiError>) -> Swift.Void)
+  public func login(jwtToken: Swift.String, completion: @escaping (Swift.Result<EXiSDK.EXiProfile?, EXiSDK.EXiError>) -> Swift.Void)
+  @available(*, deprecated, message: "Do not use this function as this will be removed in future release. Use login instead")
+  public func register(jwtToken: Swift.String, completion: @escaping (Swift.Result<EXiSDK.EXiProfile?, EXiSDK.EXiError>) -> Swift.Void)
+  public func logout(completion: @escaping (Swift.Result<Swift.Bool, EXiSDK.EXiError>) -> Swift.Void)
+  public func logoutAllSessions(completion: @escaping (Swift.Result<Swift.Bool, EXiSDK.EXiError>) -> Swift.Void)
+  public func refreshSession(completion: @escaping (Swift.Result<Swift.Bool, EXiSDK.EXiError>) -> Swift.Void)
+  public func getSettings(completion: @escaping (Swift.Result<Swift.Bool, EXiSDK.EXiError>) -> Swift.Void)
+  public func getRegions(completion: @escaping (Swift.Result<[EXiSDK.EXiRegion], EXiSDK.EXiError>) -> Swift.Void)
+  public func getMetadata(completion: @escaping (Swift.Result<EXiSDK.EXiMetadata?, EXiSDK.EXiError>) -> Swift.Void)
+  @objc deinit
+}
+public enum EXiError : Swift.Error, Swift.Equatable {
+  case nilConfiguration
+  case emptyApiKey
+  case emptyJwtToken
+  case invalidKey
+  case expiredToken
+  case invalidJwtToken
+  case invalidData
+  case noInternet
+  case jsonDecodingFailure
+  case responseUnsuccessful(description: Swift.String)
+  case decodingTaskFailure(description: Swift.String)
+  case requestFailed(description: Swift.String)
+  case jsonConversionFailure(description: Swift.String)
+  case postParametersEncodingFalure(description: Swift.String)
+  public static func == (a: EXiSDK.EXiError, b: EXiSDK.EXiError) -> Swift.Bool
+}
+extension EXiSDK.EXiError {
+  public var localizedDescription: Swift.String {
+    get
+  }
+}
+public class EXiConfiguration {
+  public init(apiKey: Swift.String)
+  @objc deinit
+}
+extension EXiSDK.EXiConfiguration {
+  @discardableResult
+  public func tokenExpiryInterval(_value: Foundation.TimeInterval) -> EXiSDK.EXiConfiguration
+}
+public struct LoginResponse : Swift.Codable {
+  public let sessionToken: Swift.String?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
